@@ -1,0 +1,12 @@
+<% alias Plug.Conn
+alias TeamHeda.UserSession
+alias TeamHeda.ExternalService.{Maniaplanet,Discord} %>
+
+<nav role="navigation">
+  <%= case Conn.get_session(@conn, :current_user) do
+    %UserSession{username: username} ->
+      render TeamHedaWeb.AuthView, "logout.html", username: username
+    nil ->
+      link "Login", to: Discord.authorize_url
+  end %>
+</nav>

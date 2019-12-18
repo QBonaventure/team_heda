@@ -1,0 +1,44 @@
+<h1><%= "#{@team.shortname} - #{@team.name}" %></h1>
+
+<section>
+  <h1>Players</h1>
+  <%= for player <- @team_players do %>
+    <section class="player-mini-card" id="<%= "player-#{player.id}" %>">
+      <h1><%= player.name %></h1>
+      <%= live_link "Profile", to: Routes.live_path(@socket, TeamHedaWeb.TeamManagerLive, player.id) %>
+    </section>
+  <% end %>
+</section>
+
+
+<section>
+  <h1>Games</h1>
+
+  <%= if TeamHeda.Game.is?(@added_game) do %>
+    <section class="game-mini-card validate">
+      <h1>
+        <%= "#{@added_game.name}" %>
+      </h1>
+      <div>
+        <span>Validate?</span>;
+        <span phx-click="validate-game-selected" phx-value-gameid="<%= @added_game.id %>">Yes</span>
+        <span phx-click="cancel-game-selected">No</span>
+      </div>
+    </section>
+  <% end %>
+
+  <div id="team-games-list" phx-update="prepend">
+    <%= for game <- @team_games do %>
+      <section class="game-mini-card" id="<%= "game-#{game.id}" %>">
+        <h1><%= game.name %></h1>
+      </section>
+    <% end %>
+  </div>
+  <h1>Add game</h1>
+  <input type="text" phx-keyup="search-game" />
+    <%= for game <- @games_suggestions do %>
+      <span id="suggested-game-<%= game.id %>" phx-click="suggested-game-selected" phx-value-gameid="<%= game.id %>">
+        <%= game.name %>
+      </span>
+    <% end %>
+</section>

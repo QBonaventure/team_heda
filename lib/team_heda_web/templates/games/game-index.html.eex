@@ -1,0 +1,2 @@
+<section class="phx-hero">
+  <h1><%= @game.name %></h1>

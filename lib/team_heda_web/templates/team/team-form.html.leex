@@ -1,0 +1,13 @@
+<%= f = form_for @changeset, "#", [phx_submit: "create-team"] %>
+  <label>
+    Team Name: <%= text_input f, :name, "phx-keyup": "validate-name" %>
+  </label>
+  <%= error_tag f, :name %>
+    <label>
+      Shortname: <%= text_input f, :shortname %>
+    </label>
+    <%= error_tag f, :shortname %>
+
+  <%= submit "Submit" %>
+  <%= tag(:input, type: "button", value: "Cancel", phx_click: "cancel-form") %>
+</form>

@@ -1,0 +1,14 @@
+<section class="phx-hero">
+  <h1><%= link "+", to: "/games/new" %></h1>
+  <p>A productive web framework that<br/>does not compromise speed or maintainability.</p>
+</section>
+
+<section>
+  <ul>
+    <%= for game <- @games do %>
+    <li>
+        <%= link game.name, to: Routes.games_path(@conn, :game_index, game.id) %>
+    </li>
+    <%= end %>
+  </ul>
+</section>

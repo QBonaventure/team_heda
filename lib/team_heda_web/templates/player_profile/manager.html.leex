@@ -1,0 +1,64 @@
+<section id="forms-placeholder" phx-update="replace">
+  <%= @form %>
+</form>
+
+</section>
+
+<section id="player-teams">
+  <section class="managed-teams-list">
+    <h1>Teams I Manage</h1>
+    <div id="managed-teams-list-wrapper"  phx-update="append">
+    <%= for team <- @managed_teams do %>
+      <section class="team-card" id="<%= "managed-team-#{team.id}" %>">
+        <h1><%= team.name %></h1>
+        <%= live_link "Manage", to: Routes.live_path(@socket, TeamHedaWeb.TeamManagerLive, team.id) %>
+        <div>
+          <span class="label">Created on:</span>
+          <span class="value"><%= team.inserted_at %></span>
+        </div>
+      </section>
+    <% end %>
+    </div>
+  </section>
+
+  <section class="teams-list">
+    <h1>My Teams</h1>
+    <div id="teams-list-wrapper"  phx-update="append">
+      <%= for team <- @teams do %>
+        <section id="<%= "team-#{team.id}" %>" class="team-card">
+          <h1><%= team.name %></h1>
+          <div>
+            <span class="label">Created on:</span>
+            <span class="value"><%= team.inserted_at %></span>
+          </div>
+        </section>
+      <% end %>
+    </div>
+  </section>
+
+  <button phx-click="open-create-team-form">
+    Create Team
+  </button>
+</section>
+
+<section id="my-info-form">
+  <%= f = form_for @player_changeset, "#", [phx_submit: "update-my-info"] %>
+    <label>
+      Display Name: <%= text_input f, :name, "phx-keyup": "validate-my-infos" %>
+    </label>
+    <%= error_tag f, :name %>
+
+    <%= submit "Submit" %>
+    <%= tag(:input, type: "button", value: "Cancel", phx_click: "cancel-my-form-changes") %>
+  </form>
+</section>
+
+<section id="my-linked-accounts">
+  <h1>Linked accounts</h1>
+  <%= for account <- @external_accounts do %>
+    <section id="<%= "#{Slug.slugify(account.service.name)}" %>" class="account-card">
+      <h1><%= account.service.name %></h1>
+      <p><%= account.username %></p>
+    </section>
+  <% end %>
+</section>

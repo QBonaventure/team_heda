@@ -1,0 +1,15 @@
+<section class="phx-hero">
+  <h1>Add a new game</h1>
+
+  <%= form_for @changeset, Routes.games_path(@conn, :create), fn f -> %>
+    <div class="form-group">
+      <%= label f, :name, class: "control-label" %>
+      <%= text_input f, :name, class: "form-control" %>
+      <%= error_tag f, :name %>
+    </div>
+
+    <div class="form-group">
+      <%= submit "Submit", class: "btn btn-primary" %>
+    </div>
+  <%= end %>
+</section>
